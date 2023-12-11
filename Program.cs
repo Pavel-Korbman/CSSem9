@@ -78,27 +78,23 @@
 // A = 3; B = 5 -> 243 (3⁵)
 // A = 2; B = 3 -> 8
 
-System.Console.WriteLine("Введите число");
-int num1 = Convert.ToInt32(Console.ReadLine());
+Console.WriteLine("Введите число");
+double num1 = Convert.ToDouble(Console.ReadLine());
 
-System.Console.WriteLine("Введите число");
+Console.WriteLine("Введите степень");
 int num2 = Convert.ToInt32(Console.ReadLine());
 
-int SumNumber(int num, int rank) 
+double SumNumber(double num, int rank)
 {
-    if(rank==0)
+    if (rank == 0) return 1;
+    if (rank == 1) return num;
+    if (rank == -1) return 1/num;
+    if (rank < -1) 
     {
-        return 1;
+        rank = -1*rank;
+        return 1/(num * SumNumber(num, rank - 1));
     }
-   if(rank==1)
-   {
-    return num;
-   }
-
-    return (num * SumNumber(num, rank-1)); // 5* 5* 5
+    else return num * SumNumber(num, rank - 1); // 5* 5* 5
 }
 
-System.Console.WriteLine(SumNumber(num1,num2));
-
-// Доделать для степеней меньше 0
-
+Console.WriteLine($"Результат {SumNumber(num1, num2):F3}");
